@@ -1,6 +1,6 @@
 {
   "name": "dshairedskill",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "DSHairedskill 小工具箱：一个 stdio MCP server，向 DSH/Claude Code/Codex 等 MCP 客户端暴露红蓝队安全测试原语（侦察、交互、检测、制品与依赖扫描）。知识由 skills/ 提供，本包提供可调用的手。",
   "type": "module",
   "packageManager": "pnpm@10.28.2",
