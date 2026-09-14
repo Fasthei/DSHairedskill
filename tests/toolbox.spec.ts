@@ -69,7 +69,7 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse(content.text)
 }
 
-describe('@dshaired/mcp-toolbox 集成测试（真起 HTTP 靶子）', () => {
+describe('@fasthei/dshaired-mcp-toolbox 集成测试（真起 HTTP 靶子）', () => {
   it('列出全部工具', async () => {
     const names = (await client.listTools()).tools.map((t) => t.name)
     for (const n of ['http_fingerprint', 'probe_health', 'fetch_agent_card', 'dump_openapi', 'enum_endpoints', 'send_prompt', 'a2a_list_agents', 'a2a_send_message', 'mcp_list_tools', 'mcp_call_tool', 'mcp_permission_probe', 'query_elk', 'serve_payload', 'stop_payload_server', 'output_handling_probe', 'package_reputation_check', 'pickle_scan', 'consumption_probe', 'defensive_tool_status', 'skill_security_scan', 'model_artifact_scan', 'osv_dependency_scan', 'trivy_filesystem_scan']) {

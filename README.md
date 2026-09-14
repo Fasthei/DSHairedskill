@@ -1,18 +1,36 @@
-# DSHAIred
+# DSHairedskill
 
 AI 红队方法论 Skill + 配套 MCP 执行工具箱。面向用户自己授权的靶场，不面向生产攻击。
 
 - `skills/`：17 个红蓝队方法论 Skill（每个是一份 `SKILL.md`）。
-- `src/`：一个 stdio MCP server（`@dshaired/mcp-toolbox`），暴露 23 个执行工具。
+- `src/`：一个 stdio MCP server（[`@fasthei/dshaired-mcp-toolbox`](https://github.com/Fasthei/DSHairedskill/pkgs/npm/dshaired-mcp-toolbox)），暴露 23 个执行工具。
 
 两者各自独立、按需接入：Skill 装进支持 Skill 的 CLI，工具箱注册成 MCP server。项目设计意图见 [关于本项目](#关于本项目)。
 
 ## 环境要求
 
 - Node.js `^22.19.0` 或 `>=24.0.0`
-- pnpm `10.28.2`（仓库用 `packageManager` 字段锁定版本）
+- pnpm `10.28.2`（仅源码构建需要；只装 npm 包不需要）
 
-## 1. 克隆并构建
+## 1. 获取 MCP 工具箱
+
+两种方式二选一。**Skill 不在 npm 包里**，无论选哪种方式，装 Skill 都要看第 2 步。
+
+### 方式一：装 npm 包（免 clone）
+
+工具箱发布在 GitHub Packages，**装公开包也需要认证**（GitHub Packages 的限制，不是本项目设的）：在 GitHub 生成一个 classic PAT，勾选 `read:packages`，然后：
+
+```bash
+# ~/.npmrc 加两行（把 <PAT> 换成你生成的 token）
+echo "@fasthei:registry=https://npm.pkg.github.com" >> ~/.npmrc
+echo "//npm.pkg.github.com/:_authToken=<PAT>" >> ~/.npmrc
+
+npm install -g @fasthei/dshaired-mcp-toolbox
+```
+
+装完后全局有一个 `dshaired-mcp-toolbox` 命令，`which dshaired-mcp-toolbox` 能拿到它的绝对路径，第 3 步注册 MCP 时用得到。
+
+### 方式二：clone 源码构建
 
 ```bash
 git clone https://github.com/Fasthei/DSHairedskill.git
@@ -22,7 +40,7 @@ pnpm build   # 编译 src/ → lib/，产出 lib/server.js
 pnpm test    # 可选：跑一遍 vitest
 ```
 
-构建产物是 `lib/server.js`，下面注册 MCP 时用得到它的绝对路径。
+构建产物是 `lib/server.js`，第 3 步注册 MCP 时用得到它的绝对路径。
 
 ## 2. 安装 Skill
 
@@ -102,7 +120,7 @@ codex mcp add dshaired -- node '<仓库绝对路径>/lib/server.js'
 
 ## 关于本项目
 
-DSHAIred 关注的不是"再收集一批 Payload"，而是理解 AI 系统里的信任如何流动：不可信输入如何被模型当成指令、模型输出如何变成下游真实动作、局部控制如何继承更大范围的系统信任，以及如何用目标侧证据证明攻击确有其效。
+DSHairedskill 关注的不是"再收集一批 Payload"，而是理解 AI 系统里的信任如何流动：不可信输入如何被模型当成指令、模型输出如何变成下游真实动作、局部控制如何继承更大范围的系统信任，以及如何用目标侧证据证明攻击确有其效。
 
 按攻击面划分，17 个 Skill 覆盖：
 

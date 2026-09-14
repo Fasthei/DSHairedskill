@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * @dshaired/mcp-toolbox — stdio MCP server（DSHAIred 小工具箱）。
+ * @fasthei/dshaired-mcp-toolbox — stdio MCP server（DSHairedskill 小工具箱）。
  *
- * 向 DSH（dsh-mcp-client, transport: stdio）与 agent-swarm 暴露安全测试执行原语。
+ * 向 DSH（dsh-mcp-client, transport: stdio）等 MCP 客户端暴露安全测试执行原语。
  * 知识由 skills 提供，本 server 提供"手"。每个工具模块在 tools/ 下，统一经
  * http.probe 探测、返回结构化结果 + 原始证据。面向用户自己授权的靶场。
  *
@@ -13,9 +13,9 @@
  *       serverName: dshaired
  *       transport: stdio
  *       command: node
- *       args: ['<abs path>/packages/mcp-toolbox/lib/server.js']
+ *       args: ['<abs path>/lib/server.js']
  *
- * @module @dshaired/mcp-toolbox/server
+ * @module @fasthei/dshaired-mcp-toolbox/server
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'

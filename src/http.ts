@@ -13,7 +13,7 @@ export interface HttpOptions {
 
 export const DEFAULT_HTTP: HttpOptions = {
   timeoutMs: 15000,
-  userAgent: 'DSHAIred-mcp-toolbox/0.0',
+  userAgent: 'DSHairedskill-mcp-toolbox/0.0',
   maxBodyBytes: 65536,
 }
 

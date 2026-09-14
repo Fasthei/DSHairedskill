@@ -1,4 +1,4 @@
-# DSHAIred Skill 编写规范（给所有 skill 作者 Agent）
+# DSHairedskill Skill 编写规范（给所有 skill 作者 Agent）
 
 本项目把 OSAI 课程（`kb_osairag_en`）按「章/领域」做成 **DSH 原生 Skill**：约 12 个 chapter-skill 覆盖全部 66 小节，每个 Skill 内部安排它名下的小节。模型按需用 `skill` 工具加载、或用户 `/名字` 调用；同一套 Skill 一键部署到 DSH（交互）与 agent-swarm（后台）。
 
