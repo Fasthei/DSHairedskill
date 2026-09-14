@@ -1,6 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/project" }
+    { "path": "packages/mcp-toolbox" }
   ]
 }

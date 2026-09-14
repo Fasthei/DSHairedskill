@@ -140,18 +140,10 @@ Skill 清单与编写约定见 [`skills/`](skills) 和 [`skills/SKILL_AUTHORING.
 
 ```text
 skills/                 17 个红蓝队方法论 Skill（每个含 SKILL.md）
-packages/
-  mcp-toolbox/          stdio MCP server，23 个执行工具的唯一实现
-  evidence-report/      发现、证据引用、报告输出的最小模型
-  project/              目标范围、材料引用、假设、信任关系的最小项目上下文模型
-  execution/            DSH 本地执行环境能力清点（占位骨架，见包内 README）
-resources/
-  method-notes/         开发者编写的方法资料与来源索引
-  report-templates/     基础 Markdown 报告布局
-scripts/install/        本机一键安装脚本（铺 Skill + 构建工具箱 + 打印 MCP 注册命令）
+packages/mcp-toolbox/    stdio MCP server，23 个执行工具的唯一实现
 ```
 
-各包/目录的实际完成度、已验证内容与未实现部分以根目录 [`STATUS.md`](STATUS.md) 为准，本文件只描述设计意图。
+实际完成度、已验证内容见根目录 [`STATUS.md`](STATUS.md)，本文件只描述设计意图。
 
 ## 构建
 
@@ -163,7 +155,11 @@ pnpm -r build
 pnpm test
 ```
 
-## 接入 DSH
+## 接入 MCP 客户端
+
+先构建出 `packages/mcp-toolbox/lib/server.js`（见上方“构建”），再按客户端注册：
+
+**DSH**（cordis patch）：
 
 ```yaml
 - id: mcp-dshaired
@@ -175,4 +171,18 @@ pnpm test
     args: ['<仓库绝对路径>/packages/mcp-toolbox/lib/server.js']
 ```
 
-源码试装脚本：[`scripts/install/install.sh`](scripts/install/install.sh)。许可证见 [LICENSE](LICENSE)。
+**Claude Code**：
+
+```bash
+claude mcp add dshaired -- node '<仓库绝对路径>/packages/mcp-toolbox/lib/server.js'
+```
+
+**Codex CLI**：
+
+```bash
+codex mcp add dshaired -- node '<仓库绝对路径>/packages/mcp-toolbox/lib/server.js'
+```
+
+Skill 的接入方式各客户端不同：把 `skills/<name>/` 目录复制到对应客户端的 Skill 根目录（如 Claude Code 的 `~/.claude/skills/`），或按客户端的 Skill 加载机制配置。
+
+许可证见 [LICENSE](LICENSE)。
