@@ -1,0 +1,27 @@
+# Local dependencies and generated outputs
+node_modules/
+dist/
+build/
+lib/
+coverage/
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.venv/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+
+# Local upstream checkouts and task artifacts
+.upstream/
+.local/
+.omc/
+artifacts/
+*.log
+.DS_Store
+

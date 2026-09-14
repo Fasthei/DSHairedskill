@@ -1,0 +1,26 @@
+{
+  "name": "@dshaired/evidence-report",
+  "version": "0.0.0",
+  "description": "DSHAIred 证据与报告 Cordis 插件（REPORT-01 最小模型：发现状态、证据引用、基础 Markdown 输出）",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/schemastery": "3.18.2"
+  }
+}

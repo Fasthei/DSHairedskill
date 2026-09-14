@@ -1,0 +1,24 @@
+{
+  "name": "@dshaired/mcp-toolbox",
+  "version": "0.0.0",
+  "description": "DSHAIred 小工具箱：一个 stdio MCP server，向 DSH/agent-swarm 暴露红蓝队安全测试原语（侦察、交互、检测、制品与依赖扫描）。知识由 skills 提供，本包提供可调用的手。",
+  "type": "module",
+  "bin": {
+    "dshaired-mcp-toolbox": "lib/server.js"
+  },
+  "main": "lib/server.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2"
+  }
+}
