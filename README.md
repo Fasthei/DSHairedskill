@@ -132,9 +132,26 @@ DSHAIred 用五个阶段组织一次进攻：
 - **DSH 是决策入口**：根据目标反馈选择下一步，而不是机械执行固定流水线；
 - **agent-swarm 承接长任务**：继续进行后台验证、材料整理和多 Agent 协作。
 
-工具箱还提供 Cisco Skill Scanner、Protect AI ModelScan、Google OSV-Scanner 和 Aqua Trivy 的固定命令适配，用于从 Skill、模型制品、依赖和文件系统角度补充防御验证。适配器不会自动下载外部程序，详情见 [`docs/implementation/defensive-tools.md`](docs/implementation/defensive-tools.md)。
+工具箱还提供 Cisco Skill Scanner、Protect AI ModelScan、Google OSV-Scanner 和 Aqua Trivy 的固定命令适配，用于从 Skill、模型制品、依赖和文件系统角度补充防御验证。适配器不会自动下载外部程序，实现见 [`packages/mcp-toolbox/src/tools/defensive_scanners.ts`](packages/mcp-toolbox/src/tools/defensive_scanners.ts)。
 
 Skill 清单与编写约定见 [`skills/`](skills) 和 [`skills/SKILL_AUTHORING.md`](skills/SKILL_AUTHORING.md)，工具实现位于 [`packages/mcp-toolbox/`](packages/mcp-toolbox)。
+
+## 项目结构
+
+```text
+skills/                 17 个红蓝队方法论 Skill（每个含 SKILL.md）
+packages/
+  mcp-toolbox/          stdio MCP server，23 个执行工具的唯一实现
+  evidence-report/      发现、证据引用、报告输出的最小模型
+  project/              目标范围、材料引用、假设、信任关系的最小项目上下文模型
+  execution/            DSH 本地执行环境能力清点（占位骨架，见包内 README）
+resources/
+  method-notes/         开发者编写的方法资料与来源索引
+  report-templates/     基础 Markdown 报告布局
+scripts/install/        本机一键安装脚本（铺 Skill + 构建工具箱 + 打印 MCP 注册命令）
+```
+
+各包/目录的实际完成度、已验证内容与未实现部分以根目录 [`STATUS.md`](STATUS.md) 为准，本文件只描述设计意图。
 
 ## 构建
 

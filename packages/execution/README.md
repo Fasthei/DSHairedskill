@@ -2,17 +2,11 @@
 
 核实并补齐本地 DSH 执行环境的真实缺口。
 
-## 开发入口
-
-先读根目录 [CLAUDE.md](../../CLAUDE.md) 和 [实施方案](../../docs/planning/04-implementation-plan.md)，再按本目录 [TASKS.md](TASKS.md) 开发。当前仅为目录与任务骨架，没有业务实现。
+实际完成度见根目录 [STATUS.md](../../STATUS.md)。
 
 ## 边界
 
 先复用终端、文件、HTTP、浏览器等上游能力；没有缺口则只交付验证记录，不强造服务。
-
-## 完成规则
-
-各任务状态以本目录 TASKS.md 为准。完成时补充改动文件、验证命令与结果；依赖满足后再进入下一任务。接口不确定时回到 P0 的接口映射核实。
 
 ## EXEC-01 · 能力清点（2026-09-12）
 
@@ -34,7 +28,7 @@
 ### 确认的缺口
 
 - **浏览器自动化**：`.upstream/deepseek-harness/packages` 下没有 browser/playwright/puppeteer 一类的通用 provider（仅 `benchmarks/long-session-browser` 基准和 `.agents/skills/record-browser-gif` 技能，均非可加载 seam）。红队常需的登录流程交互、DOM 检查、截图取证在 DSH 侧缺失。是否为此引入新依赖（如 Playwright）需 EXEC-02 前先询问用户（新依赖需用户批准，见硬护栏）。
-- **dsh-\* 包不可直接作为 npm 依赖复用**：本仓已发布的 `@deepseek-ai/dsh-*` 系列 npm 版本仅到 `0.0.1-rc.1`，落后于本仓选定的源码基线 `dsh-v0.1.5-rc.2`（见 `docs/implementation/compatibility.md`）。当前只把源码当接口参考，EXEC-02 落地时如何接（等待上游发版、vendor 固定 commit、还是仅参考接口自研 provider）需要用户拍板，这里不代替决定。
+- **dsh-\* 包不可直接作为 npm 依赖复用**：本仓已发布的 `@deepseek-ai/dsh-*` 系列 npm 版本仅到 `0.0.1-rc.1`，落后于本仓选定的源码基线 `dsh-v0.1.5-rc.2`。当前只把源码当接口参考，EXEC-02 落地时如何接（等待上游发版、vendor 固定 commit、还是仅参考接口自研 provider）尚未确定。
 
 ### 自检方法
 
