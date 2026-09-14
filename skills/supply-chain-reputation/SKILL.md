@@ -1,12 +1,12 @@
 ---
 name: supply-chain-reputation
 description: AI 供应链信誉操纵——模型幻觉诱导的包名/插件名抢注（slopsquatting）、同名模型/MCP Server 仿冒、虚假下载量与评分刷量（Reputation Inflation）、先建信誉后作恶（Rug Pull）等针对公共包/模型/MCP 注册表信誉机制的攻击面。面对目标依赖公共包索引、模型仓库、MCP 市场且信任其"下载量/评分/命名相似度"等信誉信号时加载。
-whenToUse: 需要评估目标是否会被模型幻觉推荐的不存在包名诱导安装、是否轻信仿冒的高分/高下载量模型或 MCP Server、或需要区分"命名可疑"与"确证恶意"时优先路由到本 skill；本 skill 内容超出课程 Ch8 范围（Ch8 仅覆盖反序列化 RCE 与训练/权重篡改），依据 OWASP LLM03、MITRE ATLAS ML Supply Chain Compromise 战术类别蒸馏泛化而成。
+whenToUse: 需要评估目标是否会被模型幻觉推荐的不存在包名诱导安装、是否轻信仿冒的高分/高下载量模型或 MCP Server、或需要区分"命名可疑"与"确证恶意"时优先路由到本 skill；本 skill 内容超出主体资料范围（该部分仅覆盖反序列化 RCE 与训练/权重篡改），依据 OWASP LLM03、MITRE ATLAS ML Supply Chain Compromise 战术类别蒸馏泛化而成。
 ---
 
 ## 超课程范围说明
 
-本 skill **不在** OSAI 课程（`kb_osairag_en`）66 小节覆盖范围内。课程 Ch8（`OSAI/EN/Ch8`）只覆盖反序列化代码执行（8.1）、训练数据/LoRA/分词器篡改（8.2）与检测规避（8.3），未涉及包/模型的信誉信号操纵、抢注命名或刷量。本文内容依据 OWASP LLM03（Supply Chain）、MITRE ATLAS 中 ML Supply Chain Compromise 相关战术、以及 NIST AI RMF 供应链治理要求蒸馏泛化，属于对 [[code-exec-and-tampering]] 的补充延伸，而非课程原文转译。
+本 skill **不在** 主体资料 66 个技术点覆盖范围内。该部分只覆盖反序列化代码执行（8.1）、训练数据/LoRA/分词器篡改（8.2）与检测规避（8.3），未涉及包/模型的信誉信号操纵、抢注命名或刷量。本文内容依据 OWASP LLM03（Supply Chain）、MITRE ATLAS 中 ML Supply Chain Compromise 相关战术、以及 NIST AI RMF 供应链治理要求蒸馏泛化，属于对 [[code-exec-and-tampering]] 的补充延伸，而非课程原文转译。
 
 ## 概述与何时用
 

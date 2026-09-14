@@ -1,5 +1,5 @@
 /**
- * a2a 工具模块（课程 Ch4 A2A 交互）。
+ * a2a 工具模块（A2A 交互）。
  * Agent Card / OpenAPI 枚举已在 recon 模块中完成；本模块做与 A2A 编排器的
  * 实际交互：列出已注册 agent、发送 A2A 消息。都是可【单独调用】的原子动作，
  * 返回结构化结果 + 原始 HTTP 证据。工具调用成功 ≠ 交互效果 ≠ 发现已验证，
@@ -19,7 +19,7 @@ export const registerA2aTools: RegisterTools = (server, deps) => {
     'a2a_list_agents',
     {
       description:
-        'A2A 已注册 Agent 列表（Ch4）：GET /agents（编排器常见的已注册 Agent 枚举端点）。返回解析后的列表与原始证据；' +
+        'A2A 已注册 Agent 列表：GET /agents（编排器常见的已注册 Agent 枚举端点）。返回解析后的列表与原始证据；' +
         '工具调用成功不等于该端点确实存在或数据完整，需结合状态码与响应体人工核实。',
       inputSchema: { baseUrl: z.string().describe('目标基址，如 http://host:port') },
     },
@@ -34,7 +34,7 @@ export const registerA2aTools: RegisterTools = (server, deps) => {
     'a2a_send_message',
     {
       description:
-        'A2A 消息发送（Ch4）：POST 一个 A2A 消息 JSON 对象到目标端点（默认 /a2a/message/send）。返回解析后的响应与原始证据；' +
+        'A2A 消息发送：POST 一个 A2A 消息 JSON 对象到目标端点（默认 /a2a/message/send）。返回解析后的响应与原始证据；' +
         '工具调用成功 ≠ 消息被目标 agent 实际处理 ≠ 交互效果已验证，需结合响应内容与后续观察人工核实。',
       inputSchema: {
         baseUrl: z.string().describe('目标基址，如 http://host:port'),

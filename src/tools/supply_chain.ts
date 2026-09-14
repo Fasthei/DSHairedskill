@@ -18,7 +18,7 @@ export const registerSupplyChainTools: RegisterTools = (server, deps) => {
     'package_reputation_check',
     {
       description:
-        '包/模型信誉检查（Ch15 供应链）：查询公共 registry（npm/PyPI/HuggingFace）确认给定名称是否真实存在，' +
+        '包/模型信誉检查（供应链）：查询公共 registry（npm/PyPI/HuggingFace）确认给定名称是否真实存在，' +
         '并抽取注册时间、版本数、下载量等信号，用于发现幻觉包名抢注（slopsquatting）或仿冒知名包。' +
         '只读查询，不安装、不发布。命中的可疑信号（注册过新/下载量极低/名称近似知名包）是线索，非确证。',
       inputSchema: {

@@ -1,5 +1,5 @@
 /**
- * detection 工具模块（课程 Ch2.4 检测与规避 + Ch4 靶场监控栈 ELK）。
+ * detection 工具模块（检测与规避 + 目标环境监控栈 ELK）。
  * 用途：攻击/探测动作之后，回查 ELK（Elasticsearch/Kibana）里是否有对应的检测记录或告警，
  * 判断行动是否已被防御侧发现。只读查询，不做任何写入或破坏操作。面向用户授权目标。
  * @module @dshaired/mcp-toolbox/tools/detection
@@ -17,7 +17,7 @@ export const registerDetectionTools: RegisterTools = (server, deps) => {
     'query_elk',
     {
       description:
-        'ELK 检测查询（Ch2.4 检测与规避 / Ch4 监控）：查询 Elasticsearch 索引，看攻击/探测动作是否触发了检测记录或告警。' +
+        'ELK 检测查询：查询 Elasticsearch 索引，看攻击/探测动作是否触发了检测记录或告警。' +
         '给 body 则以原始 JSON 查询体 POST /_search；否则以 q（Lucene 查询串）+ size 做 GET /_search。命中是线索，非确证。',
       inputSchema: {
         esUrl: z.string().describe('Elasticsearch 基址，如 http://host:9200'),

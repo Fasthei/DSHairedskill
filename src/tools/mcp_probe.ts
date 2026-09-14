@@ -1,5 +1,5 @@
 /**
- * mcp_probe 工具模块（课程 Ch7 MCP：枚举/调用目标 MCP 的工具、探权限边界）。
+ * mcp_probe 工具模块（MCP：枚举/调用目标 MCP 的工具、探权限边界）。
  * 这里连的是"被测的外部 MCP 服务器"（stdio 或 http transport），与本工具箱自身的
  * McpServer 无关。每次调用都新建 Client 连接，操作完毕即关闭，不长期持有会话。
  * 工具调用成功 ≠ 权限边界或漏洞已验证：这里只做枚举与转发调用，结果仍需人工判读。
@@ -84,7 +84,7 @@ export const registerMcpProbeTools: RegisterTools = (server, _deps) => {
     'mcp_list_tools',
     {
       description:
-        'MCP 工具枚举（Ch7）：连接目标 MCP server（stdio 或 http），listTools() 列出其暴露的工具名/描述/inputSchema。命中是线索，非确证——工具存在不代表可无权限调用。',
+        'MCP 工具枚举：连接目标 MCP server（stdio 或 http），listTools() 列出其暴露的工具名/描述/inputSchema。命中是线索，非确证——工具存在不代表可无权限调用。',
       inputSchema: connectionSchema,
     },
     async (input) => {
@@ -118,7 +118,7 @@ export const registerMcpProbeTools: RegisterTools = (server, _deps) => {
     'mcp_call_tool',
     {
       description:
-        'MCP 工具调用（Ch7）：连接目标 MCP server，callTool() 调用其指定工具并转发参数，返回原始结果。用于探权限边界——调用成功只说明请求被接受，不代表越权或漏洞已验证，仍需结合上下文判读。',
+        'MCP 工具调用：连接目标 MCP server，callTool() 调用其指定工具并转发参数，返回原始结果。用于探权限边界——调用成功只说明请求被接受，不代表越权或漏洞已验证，仍需结合上下文判读。',
       inputSchema: {
         ...connectionSchema,
         toolName: z.string().describe('要调用的目标工具名'),
@@ -151,7 +151,7 @@ export const registerMcpProbeTools: RegisterTools = (server, _deps) => {
     'mcp_permission_probe',
     {
       description:
-        'MCP 权限滥用/约束绕过探测（Ch7.3）：连接目标 MCP server，对指定工具依次用越界参数值（路径遍历、绝对路径、越权资源标识等）调用，记录每次是被拒绝（错误/约束类消息）还是被接受。未给 probes 时使用内置无害探针集。未被拒绝仅是线索，需结合实际影响人工判读，非直接确证漏洞。',
+        'MCP 权限滥用/约束绕过探测：连接目标 MCP server，对指定工具依次用越界参数值（路径遍历、绝对路径、越权资源标识等）调用，记录每次是被拒绝（错误/约束类消息）还是被接受。未给 probes 时使用内置无害探针集。未被拒绝仅是线索，需结合实际影响人工判读，非直接确证漏洞。',
       inputSchema: {
         ...connectionSchema,
         toolName: z.string().describe('要探测的目标工具名'),

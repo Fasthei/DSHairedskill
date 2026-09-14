@@ -1,12 +1,12 @@
 ---
 name: attack-output-handling
 description: 攻击模型/Agent 输出被下游不当处理的场景（OWASP GenAI Top10 LLM05 Improper Output Handling）——模型生成内容未经净化/转义/上下文隔离即被下游渲染或解释，导致存储型/反射型 XSS、CSV/公式注入、终端转义序列注入、Markdown 危险链接与图片外泄、日志查看器注入、生成代码未经审查进入 CI/CD、以及输出被下游 shell/SQL/模板引擎当指令执行。面对任何"模型输出会被渲染成 HTML/终端/日志/表格,或被喂给下一个解释器"的目标时加载。
-whenToUse: 目标不是"模型本身被注入"（那是 attack-single-agent 的 3.2/3.3），而是"模型的合法输出流向下游消费者时,消费者对内容的信任级别设错"——例如聊天回复直接渲染进网页 DOM、导出功能生成 CSV/日志给 Excel/查看器打开、模型生成的 shell/SQL/代码被自动执行或合并。这是超出 OSAI 课程章节范围的扩展 skill,交叉借用 Ch4（间接注入投毒、命令执行规避）与 LLM05/ATLAS/NIST AI 100-2 的公开分类,不对应课程任何一节。
+whenToUse: 目标不是"模型本身被注入"（那是 attack-single-agent 的 3.2/3.3），而是"模型的合法输出流向下游消费者时,消费者对内容的信任级别设错"——例如聊天回复直接渲染进网页 DOM、导出功能生成 CSV/日志给 Excel/查看器打开、模型生成的 shell/SQL/代码被自动执行或合并。这是超出主体资料范围的扩展 skill,交叉借用间接注入投毒、命令执行规避与 LLM05/ATLAS/NIST AI 100-2 的公开分类,不对应课程任何一节。
 ---
 
 ## 概述与何时用
 
-**诚实标注**：本 skill 覆盖的主题（LLM05 Improper Output Handling）**不在 OSAI 课程的任何一章**内，课程只在 Ch4（`OSAI/EN/Ch4` 的 Blind Command Execution Verification / SQL Injection Evasion / Malicious Link Evasion / 4.7 数据投毒）触及了相邻但不同的问题——课程内容讲的是"如何让模型把恶意指令当成合法请求执行"（输入侧、注入侧），而本 skill 讲的是"模型已经诚实地生成了一段文本（可能是被上游注入诱导生成的,也可能只是复述了用户输入或摄入数据中的原始片段），这段文本本身没有被模型执行任何动作,但下游系统在渲染/解析/执行它时没有把它当成不可信数据处理"。这是两个独立但常常首尾相接的问题：Ch3/Ch4 的注入让模型愿意"说"出攻击者想要的内容,本 skill 让"模型说出的内容"在下游产生真实副作用。
+**诚实标注**：本 skill 覆盖的主题（LLM05 Improper Output Handling）**不在主体资料的任何一部分**内，主体资料只在 Blind Command Execution Verification / SQL Injection Evasion / Malicious Link Evasion / 数据投毒相关内容里触及了相邻但不同的问题——那部分内容讲的是"如何让模型把恶意指令当成合法请求执行"（输入侧、注入侧），而本 skill 讲的是"模型已经诚实地生成了一段文本（可能是被上游注入诱导生成的,也可能只是复述了用户输入或摄入数据中的原始片段），这段文本本身没有被模型执行任何动作,但下游系统在渲染/解析/执行它时没有把它当成不可信数据处理"。这是两个独立但常常首尾相接的问题：上游的注入让模型愿意"说"出攻击者想要的内容,本 skill 让"模型说出的内容"在下游产生真实副作用。
 
 核心前提（依据 OWASP GenAI Top10 LLM05 与 MITRE ATLAS 对应技术）：LLM 输出在很多集成方式里被当作"系统已核验、可信"的字符串直接拼进下一个处理阶段——HTML 模板、终端打印、CSV 单元格、日志聚合器、shell 命令行、SQL 语句、CI 流水线的代码提交——而没有对输出做与"外部不可信输入"同等强度的净化/转义/上下文隔离。只要能让模型的合法输出通道（文本回复、生成代码、导出内容）里出现攻击者控制的字节序列,下游那一层缺失的信任边界就是攻击面,与模型本身是否"被越狱"无关。
 
@@ -19,7 +19,7 @@ whenToUse: 目标不是"模型本身被注入"（那是 attack-single-agent 的 
 - 代码生成助手的输出被自动合并/自动运行进 CI/CD 流水线,未经人工审查。
 - 模型输出被下游代码不加参数化地拼进 shell 命令、SQL 语句、模板引擎（Jinja2/Handlebars 等）字符串 → 命令注入/SQL 注入/模板注入,但注入点在**输出侧**而非通常理解的"用户直接输入侧"。
 
-不适用于：让模型本身产生该输出的注入手法本身（见 `attack-single-agent` 的 3.2/3.3）、多 Agent 间 A2A 协议层的投毒与命令执行确认（见 `attack-a2a-multi-agent`，尤其其 Ch4 的 Blind Command Execution Verification / SQL Injection Evasion 与本 skill 是同一条链路的"上游"部分）。
+不适用于：让模型本身产生该输出的注入手法本身（见 `attack-single-agent` 的 3.2/3.3）、多 Agent 间 A2A 协议层的投毒与命令执行确认（见 `attack-a2a-multi-agent`，尤其其 Blind Command Execution Verification / SQL Injection Evasion 与本 skill 是同一条链路的"上游"部分）。
 
 ## 在 SOP 中的位置
 
@@ -75,8 +75,8 @@ whenToUse: 目标不是"模型本身被注入"（那是 attack-single-agent 的 
 
 ### 7. 输出被下游 shell/SQL/模板引擎直接解释
 
-- **可观察信号**：后端代码是否把模型输出原样拼接进 `subprocess`/`os.system` 调用、SQL 字符串拼接（而非参数化查询）、或模板引擎的渲染字符串（Jinja2 `render_template_string`、Handlebars 等）。这与 `attack-a2a-multi-agent`（`OSAI/EN/Ch4` SQL Injection Evasion）中"让模型自己决定要执行的 SQL/命令"是同一条链路的**下游落点**——那里关注的是如何让模型愿意生成/转发危险指令并规避检测（如 SQL 编码隐藏 `xp_cmdshell` 关键字），本类关注的是后端代码本身是否把任何字符串（不论来源）不加处理地喂给解释器，模型输出只是众多可控输入源之一。
-- **泛化载荷形态**：确认输出落点的解释器类型后，构造该解释器语法下的边界字符探测载荷（如引号/分号/花括号/管道符），先用无害探测（`echo`、`SELECT 1`、模板表达式求值一个算式）确认解释确实发生，再考虑是否需要进一步的编码/分片规避（参考 Ch4 的编码绕过关键词过滤思路）。
+- **可观察信号**：后端代码是否把模型输出原样拼接进 `subprocess`/`os.system` 调用、SQL 字符串拼接（而非参数化查询）、或模板引擎的渲染字符串（Jinja2 `render_template_string`、Handlebars 等）。这与 `attack-a2a-multi-agent`（SQL Injection Evasion）中"让模型自己决定要执行的 SQL/命令"是同一条链路的**下游落点**——那里关注的是如何让模型愿意生成/转发危险指令并规避检测（如 SQL 编码隐藏 `xp_cmdshell` 关键字），本类关注的是后端代码本身是否把任何字符串（不论来源）不加处理地喂给解释器，模型输出只是众多可控输入源之一。
+- **泛化载荷形态**：确认输出落点的解释器类型后，构造该解释器语法下的边界字符探测载荷（如引号/分号/花括号/管道符），先用无害探测（`echo`、`SELECT 1`、模板表达式求值一个算式）确认解释确实发生，再考虑是否需要进一步的编码/分片规避（参考编码绕过关键词过滤思路）。
 - **下游风险**：命令注入、SQL 注入、服务端模板注入（SSTI），影响面等同传统 Web 漏洞，只是触发路径经过了一次 LLM 生成。
 
 ### 可用 MCP 工具

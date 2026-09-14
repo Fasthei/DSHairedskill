@@ -1,5 +1,5 @@
 /**
- * recon 工具模块（课程 Ch2 侦察 + Ch4 A2A 枚举）。
+ * recon 工具模块（侦察 + A2A 枚举）。
  * 都是可【单独调用】的原子动作，返回结构化结果 + 原始 HTTP 证据。
  * 侦察结论是线索：工具调用成功 ≠ 发现已验证。面向用户授权目标。
  * @module @dshaired/mcp-toolbox/tools/recon
@@ -26,7 +26,7 @@ export const registerReconTools: RegisterTools = (server, deps) => {
     'http_fingerprint',
     {
       description:
-        'HTTP 头指纹（Ch2）：GET 目标，挑出与 AI 后端/向量库/编排框架相关的响应头（如 X-AI-Backend、X-RAG-Provider、Server）。命中是线索，非确证。',
+        'HTTP 头指纹：GET 目标，挑出与 AI 后端/向量库/编排框架相关的响应头（如 X-AI-Backend、X-RAG-Provider、Server）。命中是线索，非确证。',
       inputSchema: { url: z.string().describe('完整 URL，如 http://host:port/') },
     },
     async ({ url }) => {
@@ -43,7 +43,7 @@ export const registerReconTools: RegisterTools = (server, deps) => {
   server.registerTool(
     'probe_health',
     {
-      description: '/health 探测（Ch3）：确认服务并读取 agent 名与端口。',
+      description: '/health 探测：确认服务并读取 agent 名与端口。',
       inputSchema: { baseUrl: z.string().describe('目标基址，如 http://host:8001') },
     },
     async ({ baseUrl }) => {
@@ -63,7 +63,7 @@ export const registerReconTools: RegisterTools = (server, deps) => {
   server.registerTool(
     'fetch_agent_card',
     {
-      description: 'Agent Card 拉取（Ch4 A2A 发现）：GET /.well-known/agent.json，解析 name/url/protocolVersion/skills 与 metadata.model。',
+      description: 'Agent Card 拉取（A2A 发现）：GET /.well-known/agent.json，解析 name/url/protocolVersion/skills 与 metadata.model。',
       inputSchema: { baseUrl: z.string().describe('目标基址，如 http://host:8000') },
     },
     async ({ baseUrl }) => {
@@ -93,7 +93,7 @@ export const registerReconTools: RegisterTools = (server, deps) => {
   server.registerTool(
     'dump_openapi',
     {
-      description: 'OpenAPI/Swagger 转储（Ch4）：GET /openapi.json 列全端点，并探测 /docs 是否开放。',
+      description: 'OpenAPI/Swagger 转储：GET /openapi.json 列全端点，并探测 /docs 是否开放。',
       inputSchema: { baseUrl: z.string().describe('目标基址') },
     },
     async ({ baseUrl }) => {
@@ -112,7 +112,7 @@ export const registerReconTools: RegisterTools = (server, deps) => {
   server.registerTool(
     'enum_endpoints',
     {
-      description: '端点枚举 401-vs-404（Ch2）：逐个 GET 候选路径并按状态码分类（401/403=存在但受保护，404=不存在）。',
+      description: '端点枚举 401-vs-404：逐个 GET 候选路径并按状态码分类（401/403=存在但受保护，404=不存在）。',
       inputSchema: {
         baseUrl: z.string().describe('目标基址'),
         paths: z.array(z.string()).describe('候选路径列表，如 ["/api/v1/users","/admin"]'),

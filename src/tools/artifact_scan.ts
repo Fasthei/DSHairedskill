@@ -1,5 +1,5 @@
 /**
- * artifact_scan 工具模块（课程 Ch8 供应链/反序列化 —— 无害静态检测）。
+ * artifact_scan 工具模块（供应链/反序列化 —— 无害静态检测）。
  * 只做静态字节扫描：找 pickle 危险 opcode / 危险模块导入字符串，
  * 不反序列化、不 unpickle、不执行任何制品内容。命中仅为线索，需人工复核。
  * @module @dshaired/mcp-toolbox/tools/artifact_scan
@@ -92,7 +92,7 @@ export const registerArtifactScanTools: RegisterTools = (server, _deps) => {
     'pickle_scan',
     {
       description:
-        'Pickle/PyTorch/Joblib 制品无害静态扫描（Ch8）：只读字节扫描危险 opcode（REDUCE/GLOBAL/STACK_GLOBAL）与危险导入字符串（os/subprocess/eval/exec/__reduce__ 等），不反序列化、不执行。命中是线索，需人工复核。',
+        'Pickle/PyTorch/Joblib 制品无害静态扫描：只读字节扫描危险 opcode（REDUCE/GLOBAL/STACK_GLOBAL）与危险导入字符串（os/subprocess/eval/exec/__reduce__ 等），不反序列化、不执行。命中是线索，需人工复核。',
       inputSchema: { path: z.string().describe('本地模型/制品文件路径') },
     },
     async ({ path }) => {

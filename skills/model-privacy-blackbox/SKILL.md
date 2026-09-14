@@ -1,12 +1,12 @@
 ---
 name: model-privacy-blackbox
-description: 黑盒模型隐私与提取攻击——模型提取/蒸馏、训练数据提取、成员推断、属性推断、概率/排序/时间侧信道、对抗样本、决策边界探测、能量-延迟攻击。面对"只有查询接口(API/端点)，无权重/无梯度，需要评估模型能被窃取多少信息或多少自身"时加载。**课程外扩展**，非 OSAI 课程覆盖范围，依据 NIST AI 100-2 / MITRE ATLAS / OWASP 整理。
+description: 黑盒模型隐私与提取攻击——模型提取/蒸馏、训练数据提取、成员推断、属性推断、概率/排序/时间侧信道、对抗样本、决策边界探测、能量-延迟攻击。面对"只有查询接口(API/端点)，无权重/无梯度，需要评估模型能被窃取多少信息或多少自身"时加载。**课程外扩展**，非主体资料覆盖范围，依据 NIST AI 100-2 / MITRE ATLAS / OWASP 整理。
 whenToUse: 目标是仅暴露推理接口的黑盒模型（分类器、embedding 服务、LLM API 等），需要判断/执行模型提取、训练数据提取、成员推断、属性推断、侧信道或对抗样本攻击，且已获授权可对该接口发起大量查询时使用。
 ---
 
 # Model Privacy & Black-Box Extraction Attacks（黑盒模型隐私与提取攻击）
 
-**范围声明：本 skill 内容不来自 `kb_osairag_en` 课程库，是 DSHairedskill 的课程外扩展。** 课程内唯一相邻内容是 Ch6 嵌入反演（`embedding-inversion` skill，`OSAI/EN/Ch6`），覆盖的是"已拿到向量本身"之后的反演；本 skill 覆盖的是"只有查询接口、没有向量/权重"的更前置场景（模型提取、训练数据提取、成员推断、属性推断、侧信道、对抗样本、决策边界探测、能量-延迟攻击），两者可衔接但不重叠：先用本 skill 从查询接口窃取代理模型或推断成员资格/训练数据，再视是否拿到 embedding 导出决定要不要转 `embedding-inversion`。内容依据 NIST AI 100-2（*Adversarial Machine Learning: A Taxonomy and Terminology*，evasion/privacy 分类）、MITRE ATLAS（ML Attack Staging、Exfiltration via ML Inference API 等战术）、OWASP（ML Security Top 10 / LLM Top 10 中的 Model Theft、Training Data Extraction 相关条目）整理蒸馏，不整段复制来源文档。
+**范围声明：本 skill 内容不来自主体资料库，是 DSHairedskill 的课程外扩展。** 课程内唯一相邻内容是嵌入反演（`embedding-inversion` skill），覆盖的是"已拿到向量本身"之后的反演；本 skill 覆盖的是"只有查询接口、没有向量/权重"的更前置场景（模型提取、训练数据提取、成员推断、属性推断、侧信道、对抗样本、决策边界探测、能量-延迟攻击），两者可衔接但不重叠：先用本 skill 从查询接口窃取代理模型或推断成员资格/训练数据，再视是否拿到 embedding 导出决定要不要转 `embedding-inversion`。内容依据 NIST AI 100-2（*Adversarial Machine Learning: A Taxonomy and Terminology*，evasion/privacy 分类）、MITRE ATLAS（ML Attack Staging、Exfiltration via ML Inference API 等战术）、OWASP（ML Security Top 10 / LLM Top 10 中的 Model Theft、Training Data Extraction 相关条目）整理蒸馏，不整段复制来源文档。
 
 ## 概述与何时用
 

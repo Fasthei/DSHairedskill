@@ -4,7 +4,7 @@ description: 针对 LLM/Agent 系统的无界消耗与经济型拒绝服务方�
 whenToUse: 目标暴露可被诱导产生大量 token 消耗、重复工具调用、递归 agent-to-agent 委派、异常长上下文注入、或按调用量/模型档位计费的 LLM 服务；怀疑存在 Denial of AI Service 或 Cost Harvesting 风险。
 ---
 
-> **超课程范围声明**：OSAI 课程（`kb_osairag_en`）在 `OSAI/EN/Ch7`（MCP 工具滥用、工具链攻击）仅边缘涉及"多工具链式调用导致的连锁效应"，**未独立成节讲授无界消耗/经济型拒绝服务**。本 skill 是对课程之外的扩展补充，方法依据 OWASP LLM10（Unbounded Consumption）、MITRE ATLAS（Impact 战术下的 Cost Harvesting / Denial of ML Service）与 NIST AI 风险管理框架蒸馏而成，不代表课程原文覆盖此主题。
+> **超课程范围声明**：主体资料在 MCP 工具滥用、工具链攻击相关部分仅边缘涉及"多工具链式调用导致的连锁效应"，**未独立成节讲授无界消耗/经济型拒绝服务**。本 skill 是对课程之外的扩展补充，方法依据 OWASP LLM10（Unbounded Consumption）、MITRE ATLAS（Impact 战术下的 Cost Harvesting / Denial of ML Service）与 NIST AI 风险管理框架蒸馏而成，不代表课程原文覆盖此主题。
 
 ## 概述与何时用
 
