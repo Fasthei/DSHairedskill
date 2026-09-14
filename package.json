@@ -1,5 +1,5 @@
 {
-  "name": "@fasthei/dshaired-mcp-toolbox",
+  "name": "dshairedskill",
   "version": "0.0.3",
   "description": "DSHairedskill 小工具箱：一个 stdio MCP server，向 DSH/Claude Code/Codex 等 MCP 客户端暴露红蓝队安全测试原语（侦察、交互、检测、制品与依赖扫描）。知识由 skills/ 提供，本包提供可调用的手。",
   "type": "module",
@@ -12,7 +12,8 @@
     "url": "git+https://github.com/Fasthei/DSHairedskill.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "bin": {
     "dshaired-mcp-toolbox": "lib/server.js"

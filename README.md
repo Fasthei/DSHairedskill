@@ -3,7 +3,7 @@
 AI 红队方法论 Skill + 配套 MCP 执行工具箱。面向用户自己授权的靶场，不面向生产攻击。
 
 - `skills/`：17 个红蓝队方法论 Skill（每个是一份 `SKILL.md`）。
-- `src/`：一个 stdio MCP server（[`@fasthei/dshaired-mcp-toolbox`](https://github.com/Fasthei/DSHairedskill/pkgs/npm/dshaired-mcp-toolbox)），暴露 23 个执行工具。
+- `src/`：一个 stdio MCP server（[`dshairedskill`](https://www.npmjs.com/package/dshairedskill)），暴露 23 个执行工具。
 
 两者各自独立、按需接入：Skill 装进支持 Skill 的 CLI，工具箱注册成 MCP server。项目设计意图见 [关于本项目](#关于本项目)。
 
@@ -18,13 +18,15 @@ AI 红队方法论 Skill + 配套 MCP 执行工具箱。面向用户自己授权
 
 ### 方式一：装 npm 包（免 clone）
 
-工具箱发布在 GitHub Packages，**装公开包也需要认证**（GitHub Packages 的限制，不是本项目设的，没发到 npmjs.com）：先在 GitHub 生成一个 classic PAT，勾选 `read:packages`，把下面的 `<PAT>` 换成它，一条命令配好认证并装上：
+工具箱发布在 npmjs.com，免认证：
 
 ```bash
-{ echo "@fasthei:registry=https://npm.pkg.github.com"; echo "//npm.pkg.github.com/:_authToken=<PAT>"; } >> ~/.npmrc && npm install -g @fasthei/dshaired-mcp-toolbox
+npm install -g dshairedskill
 ```
 
 装完后全局有一个 `dshaired-mcp-toolbox` 命令，`which dshaired-mcp-toolbox` 能拿到它的绝对路径，第 3 步注册 MCP 时用得到。
+
+> 历史存档：`0.0.1`–`0.0.3` 也发过 GitHub Packages（`@fasthei/dshaired-mcp-toolbox`），装那边需要先在 `~/.npmrc` 配一个带 `read:packages` 权限的 GitHub PAT，之后不再往那边发新版，直接用上面 npmjs.com 的方式即可。
 
 ### 方式二：clone 源码构建
 
