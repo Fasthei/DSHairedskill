@@ -68,4 +68,4 @@ cd /Volumes/macOS/GO/OSAIRAG && MILVUS_COLLECTION=kb_osairag_en .venv/bin/python
 | `model-privacy-blackbox` | 黑盒模型提取/成员推断/侧信道 | NIST AI 100-2 | `blackbox_query_harness`（待实现） | 多数需 P4+算力 |
 | `multimodal-computer-use` | 多模态/computer-use 注入（图片/二维码/字幕/DOM 欺骗） | ATLAS/OWASP | `multimodal_payload_gen`（待实现） | 投放需 P4 |
 
-对应新增 MCP 工具在 `packages/mcp-toolbox/src/tools/`：`output.ts`(output_handling_probe)、`consumption.ts`(consumption_probe)、`supply_chain.ts`(package_reputation_check)、`payload_host.ts`(serve_payload/stop_payload_server)、`artifact_scan.ts`(pickle_scan)、`mcp_probe.ts`(新增 mcp_permission_probe)。`blackbox_query_harness`/`multimodal_payload_gen` 为 P4 待实现。
+对应新增 MCP 工具在 `src/tools/`：`output.ts`(output_handling_probe)、`consumption.ts`(consumption_probe)、`supply_chain.ts`(package_reputation_check)、`payload_host.ts`(serve_payload/stop_payload_server)、`artifact_scan.ts`(pickle_scan)、`mcp_probe.ts`(新增 mcp_permission_probe)。`blackbox_query_harness`/`multimodal_payload_gen` 为 P4 待实现。

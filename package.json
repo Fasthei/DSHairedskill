@@ -1,18 +1,32 @@
 {
-  "name": "dshaired-root",
+  "name": "@dshaired/mcp-toolbox",
   "version": "0.0.0",
+  "description": "DSHAIred 小工具箱：一个 stdio MCP server，向 DSH/Claude Code/Codex 等 MCP 客户端暴露红蓝队安全测试原语（侦察、交互、检测、制品与依赖扫描）。知识由 skills/ 提供，本包提供可调用的手。",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.28.2",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },
+  "bin": {
+    "dshaired-mcp-toolbox": "lib/server.js"
+  },
+  "main": "lib/server.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
   "scripts": {
-    "build": "pnpm -r run build",
-    "typecheck": "tsc -b --verbose",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "3.25.76"
+  },
   "devDependencies": {
+    "@types/node": "22.10.2",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   }
