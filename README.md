@@ -18,14 +18,10 @@ AI 红队方法论 Skill + 配套 MCP 执行工具箱。面向用户自己授权
 
 ### 方式一：装 npm 包（免 clone）
 
-工具箱发布在 GitHub Packages，**装公开包也需要认证**（GitHub Packages 的限制，不是本项目设的）：在 GitHub 生成一个 classic PAT，勾选 `read:packages`，然后：
+工具箱发布在 GitHub Packages，**装公开包也需要认证**（GitHub Packages 的限制，不是本项目设的，没发到 npmjs.com）：先在 GitHub 生成一个 classic PAT，勾选 `read:packages`，把下面的 `<PAT>` 换成它，一条命令配好认证并装上：
 
 ```bash
-# ~/.npmrc 加两行（把 <PAT> 换成你生成的 token）
-echo "@fasthei:registry=https://npm.pkg.github.com" >> ~/.npmrc
-echo "//npm.pkg.github.com/:_authToken=<PAT>" >> ~/.npmrc
-
-npm install -g @fasthei/dshaired-mcp-toolbox
+{ echo "@fasthei:registry=https://npm.pkg.github.com"; echo "//npm.pkg.github.com/:_authToken=<PAT>"; } >> ~/.npmrc && npm install -g @fasthei/dshaired-mcp-toolbox
 ```
 
 装完后全局有一个 `dshaired-mcp-toolbox` 命令，`which dshaired-mcp-toolbox` 能拿到它的绝对路径，第 3 步注册 MCP 时用得到。
