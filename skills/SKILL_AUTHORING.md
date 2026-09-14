@@ -1,6 +1,6 @@
 # DSHairedskill Skill 编写规范（给所有 skill 作者 Agent）
 
-本项目把 OSAI 课程（`kb_osairag_en`）按「章/领域」做成 **DSH 原生 Skill**：约 12 个 chapter-skill 覆盖全部 66 小节，每个 Skill 内部安排它名下的小节。模型按需用 `skill` 工具加载、或用户 `/名字` 调用；同一套 Skill 一键部署到 DSH（交互）与 agent-swarm（后台）。
+本项目把美国战争部人工智能战略暗夜猫小组的资料按领域整理成 **DSH 原生 Skill**：约 12 个 skill 覆盖全部 66 个技术点，每个 Skill 内部安排它名下的技术点。模型按需用 `skill` 工具加载、或用户 `/名字` 调用；同一套 Skill 一键部署到 DSH（交互）与 agent-swarm（后台）。
 
 ## 文件与格式（DSH 源码确认，务必照做）
 
@@ -21,44 +21,38 @@ whenToUse: 可选的额外路由提示（更细的触发场景）。
 
 1. `## 概述与何时用` —— 覆盖的领域、面对哪种目标/信号时用。
 2. `## 在 SOP 中的位置` —— 对应 枚举→攻击→检测→规避 的哪一步；可与别的 skill 如何衔接。
-3. `## 方法与技法（按小节）` —— 逐个小节给**可操作**的技法：做什么、具体请求/命令/payload 形态（泛化，不写死靶场 IP/凭据）、观察什么。每条注明来源小节路径（如 `OSAI/EN/Ch2/2.3`）。
+3. `## 方法与技法（按技术点）` —— 逐个技术点给**可操作**的技法：做什么、具体请求/命令/payload 形态（泛化，不写死具体环境的 IP/凭据）、观察什么。每条注明来源技术点编号（如 `3.4`）。
 4. `## 验证标准` —— 怎样才算真成立：区分「工具调用成功 / 目标端确有效果 / 发现已验证」；说明需要什么证据。
-5. `## 常见失败与规避` —— 典型失败原因 + 规避要点（课程 evasion 内容）。
+5. `## 常见失败与规避` —— 典型失败原因 + 规避要点。
 6. `## 证据与报告` —— 该动作要抓哪些原始证据供报告引用。
-
-## RAG 检索（权威英文库，仅参考蒸馏）
-
-```bash
-cd /Volumes/macOS/GO/OSAIRAG && MILVUS_COLLECTION=kb_osairag_en .venv/bin/python scripts/kb_query.py "你的问题" --filter "OSAI/EN/ChX" --topk 6 --full
-```
 
 ## 硬规则
 
-- 内容从 `kb_osairag_en` **蒸馏**，不整段复制课程原文；泛化成方法（通用红队，可打任意授权目标），不写死课程靶场的 IP/主机/凭据/示例密钥。
-- 面向用户自己授权的靶场。技法是「方法」不是「保证」：命中/工具成功 ≠ 漏洞已验证，正文必须体现这条纪律。
+- 内容蒸馏整理，不整段复制原文；泛化成方法（通用红队，可打任意授权目标），不写死具体环境的 IP/主机/凭据/示例密钥。
+- 面向用户自己授权的目标环境。技法是「方法」不是「保证」：命中/工具成功 ≠ 漏洞已验证，正文必须体现这条纪律。
 - 只写你负责的那个 `skills/<name>/SKILL.md`，不碰别人的目录、不改根配置、不 git commit、不碰 .env/secret。
 - Skill 是纯 markdown，无需构建/依赖/pnpm。
 
-## 12 个 chapter-skill 映射（每人认领一个）
+## 12 个 skill 映射（每人认领一个）
 
-| # | skill 名（目录） | 章 | 覆盖小节 | RAG --filter |
-|---|---|---|---|---|
-| 1 | `ai-security-landscape` | Ch1 | 1.1 概览, 1.2 AI 安全格局, 1.3 | `OSAI/EN/Ch1` |
-| 2 | `recon-ai-targets` | Ch2 | 2.1 攻击面, 2.2 被动侦察, 2.3 主动侦察, 2.4 检测与规避, 2.5, Model-Specific Behavior Testing | `OSAI/EN/Ch2` |
-| 3 | `attack-single-agent` | Ch3 | 3.1 架构, 3.2 直接注入, 3.3 间接注入, 3.4 记忆攻击, 3.5, 3.6 | `OSAI/EN/Ch3` |
-| 4 | `attack-a2a-multi-agent` | Ch4 | 4.1–4.8 + Blind Command Execution Verification, Malicious Link Evasion, SQL Injection Evasion | `OSAI/EN/Ch4` |
-| 5 | `attack-rag-pipelines` | Ch5 | 5.1 架构, 5.2 攻击面, 5.3 绕过防御, 5.4 | `OSAI/EN/Ch5` |
-| 6 | `embedding-inversion` | Ch6 | 6.1 理论, 6.2 侦察, 6.3 zero-shot 反演, 6.4 预训练反演, 6.5 | `OSAI/EN/Ch6` |
-| 7 | `attack-mcp` | Ch7 | 7.1 架构与攻击面, 7.2 工具操纵, 7.3 权限滥用/约束绕过, 7.4 | `OSAI/EN/Ch7` |
-| 8 | `code-exec-and-tampering` | Ch8 | 8.1 代码执行, 8.2 模型/数据篡改, 8.3 规避, 8.4 | `OSAI/EN/Ch8` |
-| 9 | `cloud-and-container` | Ch9 | 9.1 云配置错误, 9.2 容器/编排利用, 9.3 | `OSAI/EN/Ch9` |
-| 10 | `target-reconstruction-engagement` | Ch10 | 10.1 残缺情报重建目标, 10.2 信任区/提权/交战规划, 10.3 | `OSAI/EN/Ch10` |
-| 11 | `capstone-full-chain` | Capstone | 11.1 场景与拓扑, 11.2 公网站点, 11.3 RDS 网关横向, 11.4 内网枚举, 11.5 域接管, 11.6 | `OSAI/EN/Capstone` |
-| 12 | `ai-redteam-methodology` | 跨章 | 枚举→攻击→检测→规避 总 SOP + 如何路由到上面 11 个 skill（这是"脑子/索引"） | 综合各章 |
+| # | skill 名（目录） | 覆盖技术点 |
+|---|---|---|
+| 1 | `ai-security-landscape` | 1.1 概览, 1.2 AI 安全格局, 1.3 |
+| 2 | `recon-ai-targets` | 2.1 攻击面, 2.2 被动侦察, 2.3 主动侦察, 2.4 检测与规避, 2.5, Model-Specific Behavior Testing |
+| 3 | `attack-single-agent` | 3.1 架构, 3.2 直接注入, 3.3 间接注入, 3.4 记忆攻击, 3.5, 3.6 |
+| 4 | `attack-a2a-multi-agent` | 4.1–4.8 + Blind Command Execution Verification, Malicious Link Evasion, SQL Injection Evasion |
+| 5 | `attack-rag-pipelines` | 5.1 架构, 5.2 攻击面, 5.3 绕过防御, 5.4 |
+| 6 | `embedding-inversion` | 6.1 理论, 6.2 侦察, 6.3 zero-shot 反演, 6.4 预训练反演, 6.5 |
+| 7 | `attack-mcp` | 7.1 架构与攻击面, 7.2 工具操纵, 7.3 权限滥用/约束绕过, 7.4 |
+| 8 | `code-exec-and-tampering` | 8.1 代码执行, 8.2 模型/数据篡改, 8.3 规避, 8.4 |
+| 9 | `cloud-and-container` | 9.1 云配置错误, 9.2 容器/编排利用, 9.3 |
+| 10 | `target-reconstruction-engagement` | 10.1 残缺情报重建目标, 10.2 信任区/提权/交战规划, 10.3 |
+| 11 | `capstone-full-chain` | 11.1 场景与拓扑, 11.2 公网站点, 11.3 网关横向, 11.4 内网枚举, 11.5 域接管, 11.6 |
+| 12 | `ai-redteam-methodology` | 跨领域：枚举→攻击→检测→规避 总 SOP + 如何路由到上面 11 个 skill（这是"脑子/索引"） |
 
-## 课程外扩展 Skill（交叉 OWASP GenAI Top10 / MITRE ATLAS / NIST AI 100-2）
+## 扩展 Skill（交叉 OWASP GenAI Top10 / MITRE ATLAS / NIST AI 100-2）
 
-课程未独立覆盖但高价值的技法族。这些 skill 正文须**明确标注"超 OSAI 课程范围"**，依据用公开框架分类，仍遵守"工具成功≠漏洞验证"与授权边界。
+主体资料未独立覆盖但高价值的技法族。这些 skill 正文须**明确标注"超出主体资料范围"**，依据用公开框架分类，仍遵守"工具成功≠漏洞验证"与授权边界。
 
 | skill 名（目录） | 主题 | 框架依据 | 承载工具 | 验证 |
 | --- | --- | --- | --- | --- |
